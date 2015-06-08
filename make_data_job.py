@@ -9,15 +9,19 @@ import subprocess
 env = Environment(loader=FileSystemLoader('templates'))
 template = env.get_template('data_analysis.qsub.sh')
 
-script_path = '$HOME/Documents/Code/alphas-dec14/SimpleAnalysis_data_batch.py'
+script_path = os.path.expanduser('~/Documents/Code/alphas-dec14/SimpleAnalysis_data_batch.py')
 
 input_files = glob.glob(os.path.expanduser('~/Documents/Data/Alphas-Dec14/*_ps.evt'))
 
-for ifpath in input_files[0:1]:
+for ifpath in input_files:
 
     run_num = re.search(r'run_(\d\d\d\d)', ifpath).group(1)
+
+    if not (115 <= int(run_num) <= 120):
+        continue
+
     ofpath = 'sa_raw_run_' + run_num + '.p'
-    qsubpath = '$HOME/jobs/sa/sa_run_' + run_num + '.qsub.sh'
+    qsubpath = os.path.expanduser('~/jobs/sa/sa_run_' + run_num + '.qsub.sh')
 
     pbs = {'task_name': 'sa_run_' + run_num,
            'walltime': '00:30:00',
@@ -29,4 +33,4 @@ for ifpath in input_files[0:1]:
         template.stream(pbs=pbs, executable=script_path, 
                         infile=ifpath, outfile=ofpath).dump(f)
 
-    subprocess.call(['echo', 'qsub', qsubpath])
+    subprocess.call(['qsub', qsubpath])
