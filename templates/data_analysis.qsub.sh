@@ -8,12 +8,14 @@
 #PBS -m abe
 #PBS -M jbradt@msu.edu
 
-export PYTHONPATH = $HOME/Documents/Code/pytpc:$HOME/Documents/Code/alphas-dec14:$PYTHONPATH
+export PYTHONPATH=$HOME/Documents/Code/pytpc:$HOME/Documents/Code/alphas-dec14:$PYTHONPATH
 
 cd {{ output_dir }}
 
 echo "Launching job"
 {{ executable }} {{ infile }} {{ outfile }}
 
-echo "Job statistics"
-qstat -f $PBS_JOBID
+if [ $PBS_JOBID ]; then
+  echo "Job statistics"
+  qstat -f $PBS_JOBID
+fi

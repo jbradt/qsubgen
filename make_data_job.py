@@ -25,7 +25,7 @@ for ifpath in input_files:
            'ppn': 1,
            'mem': '8gb'}
 
-    if not (115 <= int(run_num) <= 120):
+    if not (115 <= int(run_num) <= 135):
         continue
 
     ofpath = 'sa_raw_run_' + run_num + '.p'
@@ -38,4 +38,4 @@ for ifpath in input_files:
         template.stream(pbs=pbs, executable=script_path, output_dir=output_dir,
                         infile=ifpath, outfile=ofpath).dump(f)
 
-    subprocess.call(['echo', 'qsub', qsubpath])
+    subprocess.call(['qsub', qsubpath])
