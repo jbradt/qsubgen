@@ -1,16 +1,16 @@
 #!/bin/bash
 #PBS -N {{ pbs.task_name }}
 #PBS -j oe
+#PBS -o {{ output_dir }}/{{ pbs.task_name }}.o
 #PBS -l walltime={{ pbs.walltime }}
 #PBS -l nodes={{ pbs.nodes }}:ppn={{ pbs.ppn }}
 #PBS -l mem={{ pbs.mem }}
 #PBS -m abe
 #PBS -M jbradt@msu.edu
 
-echo "Making directory for output"
-OUTDIR="$HOME/jobs/sa/{{ pbs.task_name }}"
-mkdir $OUTDIR
-cd $OUTDIR
+export PYTHONPATH = $HOME/Documents/Code/pytpc:$HOME/Documents/Code/alphas-dec14:$PYTHONPATH
+
+cd {{ output_dir }}
 
 echo "Launching job"
 {{ executable }} {{ infile }} {{ outfile }}

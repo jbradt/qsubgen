@@ -16,21 +16,26 @@ input_files = glob.glob(os.path.expanduser('~/Documents/Data/Alphas-Dec14/*_ps.e
 for ifpath in input_files:
 
     run_num = re.search(r'run_(\d\d\d\d)', ifpath).group(1)
+    task_name = 'sa_run_' + run_num
+    output_dir = os.path.join(os.path.expanduser('~/jobs/sa'), task_name)
 
-    if not (115 <= int(run_num) <= 120):
-        continue
-
-    ofpath = 'sa_raw_run_' + run_num + '.p'
-    qsubpath = os.path.expanduser('~/jobs/sa/sa_run_' + run_num + '.qsub.sh')
-
-    pbs = {'task_name': 'sa_run_' + run_num,
+    pbs = {'task_name': task_name, 
            'walltime': '00:30:00',
            'nodes': 1,
            'ppn': 1,
            'mem': '8gb'}
 
+    if not (115 <= int(run_num) <= 120):
+        continue
+
+    ofpath = 'sa_raw_run_' + run_num + '.p'
+    qsubpath = os.path.join(output_dir, task_name + '.qsub.sh')
+
+    if not os.path.exists(output_dir):
+        os.makedirs(output_dir)
+
     with open(qsubpath, 'w') as f:
-        template.stream(pbs=pbs, executable=script_path, 
+        template.stream(pbs=pbs, executable=script_path, output_dir=output_dir,
                         infile=ifpath, outfile=ofpath).dump(f)
 
-    subprocess.call(['qsub', qsubpath])
+    subprocess.call(['echo', 'qsub', qsubpath])
