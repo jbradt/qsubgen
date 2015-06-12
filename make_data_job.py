@@ -20,12 +20,12 @@ for ifpath in input_files:
     output_dir = os.path.join(os.path.expanduser('~/jobs/sa'), task_name)
 
     pbs = {'task_name': task_name, 
-           'walltime': '00:30:00',
+           'walltime': '01:00:00',
            'nodes': 1,
            'ppn': 1,
            'mem': '8gb'}
 
-    if not (115 <= int(run_num) <= 135):
+    if not (38 <= int(run_num) <= 295):
         continue
 
     ofpath = 'sa_raw_run_' + run_num + '.p'
