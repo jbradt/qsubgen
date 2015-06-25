@@ -28,7 +28,7 @@ for ifpath in input_files:
     if not (38 <= int(run_num) <= 295):
         continue
 
-    ofpath = 'sa_raw_run_' + run_num + '.p'
+    ofpath = 'sa_raw_run_' + run_num + '.db'
     qsubpath = os.path.join(output_dir, task_name + '.qsub.sh')
 
     if not os.path.exists(output_dir):
