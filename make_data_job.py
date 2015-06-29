@@ -20,7 +20,7 @@ for ifpath in input_files:
     output_dir = os.path.join(os.path.expanduser('~/jobs/sa'), task_name)
 
     pbs = {'task_name': task_name, 
-           'walltime': '01:00:00',
+           'walltime': '01:30:00',
            'nodes': 1,
            'ppn': 1,
            'mem': '500mb'}
