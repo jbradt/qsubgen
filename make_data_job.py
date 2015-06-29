@@ -23,7 +23,7 @@ for ifpath in input_files:
            'walltime': '01:00:00',
            'nodes': 1,
            'ppn': 1,
-           'mem': '8gb'}
+           'mem': '500mb'}
 
     if not (38 <= int(run_num) <= 295):
         continue
