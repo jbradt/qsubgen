@@ -5,15 +5,13 @@
 #PBS -l walltime={{ pbs.walltime }}
 #PBS -l nodes={{ pbs.nodes }}:ppn={{ pbs.ppn }}
 #PBS -l mem={{ pbs.mem }}
-#PBS -m abe
-#PBS -M jbradt@msu.edu
-
-export PYTHONPATH=$HOME/Documents/Code/pytpc:$HOME/Documents/Code/alphas-dec14:$PYTHONPATH
 
 cd {{ output_dir }}
 
 echo "Launching job"
-{{ executable }} {{ infile }} {{ outfile }}
+# Fill in the command for your executable here. Use {{ infile }} and {{ outfile }} as placeholders for the
+# input and output files, respectively.
+/path/to/executable {{ infile }} {{ outfile }}
 
 if [ $PBS_JOBID ]; then
   echo "Job statistics"
